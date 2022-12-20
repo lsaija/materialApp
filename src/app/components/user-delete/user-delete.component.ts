@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-delete.component.css']
 })
 export class UserDeleteComponent {
-  constructor(
+ /* constructor(
     public dialogRef: MatDialogRef<UserDeleteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private userService: UserService
@@ -21,5 +21,16 @@ export class UserDeleteComponent {
       this.dialogRef.close(this.data.id);
     });
     console.log(this.data.id)
+  }*/
+
+
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<UserDeleteComponent>) { }
+
+  ngOnInit() {
+  }
+
+  closeDialog() {
+    this.dialogRef.close(false);
   }
 }

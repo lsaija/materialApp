@@ -7,6 +7,7 @@ import { UserService } from 'src/app/services/user.service';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { UserDeleteComponent } from '../user-delete/user-delete.component';
 import { of } from 'rxjs';
+import { DialogService } from 'src/app/services/dialog.service';
 
 
 
@@ -19,8 +20,9 @@ export class ListUserComponent implements OnInit{
   index?: number;
   id?: number;
   allUserSource: User[] = [];
+  currentUser?: User;
 
-  constructor(public userService:UserService,private router:Router,public dialog: MatDialog){}
+  constructor(public userService:UserService,private router:Router,public dialog: MatDialog,private dialogService: DialogService){}
 
   ngOnInit(): void {
    this.getData();
@@ -77,8 +79,27 @@ export class ListUserComponent implements OnInit{
     });
     console.log(dialogRef)
   }
+//seconda prova
+deleteUser(userId: number) {
+  // this.userService.deleteById(userId).subscribe(
+  //   res => { this.dataSource.data = res }
+  // )
+  this.userService.findById(userId).subscribe({
+    next: user => {
+      this.currentUser = user;
+    }
+  });
 
+  this.dialogService.openConfirmDialog(`Vuoi cancellare ${this.currentUser?.nome} ${this.currentUser?.cognome}?`)
+    .afterClosed().subscribe(res => {
+      if (res) {
+        this.userService.delete(userId).subscribe(
+          result => { this.dataSource.data = result }
+        );
+      }
+    });
 
+}
 
 //metodi url
   selectUtenteById(id: number){
