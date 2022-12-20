@@ -1,31 +1,36 @@
+
+
 <div style="padding: 80px" class="card-form" >
-    <form >
+    <form [formGroup]="userReactive">
     <mat-card>
     
-    <mat-form-field appearance="outline" >
+    <mat-form-field appearance="outline" *ngIf="!isReadOnlyBott()"  >
         <mat-label >Id</mat-label>
         
         <input matInput type="number" placeholder="0" 
-        [value]="userItem.id" [readonly]="isReadOnly()">
+        formControlName="id"  [readonly]="isReadOnly()">
         
     </mat-form-field>
     <mat-form-field appearance="outline">
         <mat-label>Nome</mat-label>
-        <input matInput [value]="userItem.nome" [readonly]="isReadOnly()">
+        <input matInput formControlName="nome"   name="nome"  [readonly]="isReadOnly()">
     </mat-form-field>
     <mat-form-field appearance="outline">
         <mat-label>Cognome</mat-label>
-        <input matInput [value]="userItem.cognome" [readonly]="isReadOnly()">
+        <input matInput formControlName="cognome"  name="cognome"  [readonly]="isReadOnly()">
     </mat-form-field>
     <mat-form-field appearance="outline">
         <mat-label>Data Di Nascita</mat-label>
-        <input matInput [value]="userItem.dataNascita" [readonly]="isReadOnly()">
+        <input matInput formControlName="dataNascita" name="dataNascita"  [readonly]="isReadOnly()">
+        
     </mat-form-field>
     
     
     
     </mat-card>
-    </form>  
-    <button mat-raised-button color="primary" type="submit" (click)="insertUtente()" *ngIf="isReadOnlyBott()">Conferma</button>
+   
+    <button mat-raised-button color="primary" type="submit" (click)="insertUtente()" *ngIf="isReadOnlyBott() && userReactive.value.id===0">Conferma</button>
+    <button mat-raised-button color="primary" type="submit" (click)="aggiorna()" *ngIf="isReadOnlyBott() && userReactive.value.id!==0">Conferma</button>
     <button mat-raised-button color="secondary" [routerLink]="['/list']">Indietro</button>
+</form>  
 </div>

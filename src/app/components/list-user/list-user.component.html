@@ -45,13 +45,15 @@ flex-direction: column;align-items: center;">
                 <button mat-icon-button color="primary" aria-label="Example icon button with a home icon"
                 (click)="selectUtenteModifica(element.id)">
                     <mat-icon>edit</mat-icon>
-                  </button>  
-              
-
-                <button mat-icon-button color="primary" aria-label="Example icon button with a home icon"  (click)="onClick(element.id)">
-                    <mat-icon>menu</mat-icon>
                   </button>
-                  <button mat-icon-raised-button  (click)="deleteUser(element.id)"><mat-icon>delete</mat-icon></button>
+
+                  <!--<button mat-icon-button color="primary" aria-label="Example icon button with a home icon"  (click)="onClick(element.id)">
+                    <mat-icon>menu</mat-icon>
+                  </button>-->
+                  
+                  <button mat-icon-button  (click)="deleteUser(element.id)"><mat-icon>delete</mat-icon></button>
+
+              
             </td>
           </ng-container>
       

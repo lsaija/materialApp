@@ -2,3 +2,13 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.success-bar{
+
+        background-color: #339900;
+        color: black;
+        --mdc-snackbar-container-color: var(--success-color);
+        --mat-mdc-snack-bar-button-color: var(--white-color);
+        /* -webkit-text-fill-color: black; */
+}

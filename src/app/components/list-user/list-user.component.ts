@@ -8,6 +8,7 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { UserDeleteComponent } from '../user-delete/user-delete.component';
 import { of } from 'rxjs';
 import { DialogService } from 'src/app/services/dialog.service';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 
 
 
@@ -22,7 +23,7 @@ export class ListUserComponent implements OnInit{
   allUserSource: User[] = [];
   currentUser?: User;
 
-  constructor(public userService:UserService,private router:Router,public dialog: MatDialog,private dialogService: DialogService){}
+  constructor(public userService:UserService,private router:Router,public dialog: MatDialog,private dialogService: DialogService,private snackBarService:SnackbarService){}
 
   ngOnInit(): void {
    this.getData();
@@ -96,6 +97,7 @@ deleteUser(userId: number) {
         this.userService.delete(userId).subscribe(
           result => { this.dataSource.data = result }
         );
+        this.snackBarService.openSnackBar("Cancellazione effetuata",'success-bar');
       }
     });
 

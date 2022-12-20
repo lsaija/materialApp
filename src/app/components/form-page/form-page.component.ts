@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { User } from 'src/app/model/user';
@@ -12,7 +13,13 @@ import { ListUserComponent } from '../list-user/list-user.component';
 })
 export class FormPageComponent implements OnInit{
   constructor(private route: ActivatedRoute, private service: UserService,
-    private router: Router){}
+    private router: Router,private fb:FormBuilder){}
+    userReactive:FormGroup=this.fb.group({
+      id:this.fb.control(''),
+      nome:this.fb.control('',[Validators.required,Validators.minLength(4)]),
+      cognome:this.fb.control('',[Validators.required,Validators.minLength(4)]),
+      dataNascita:this.fb.control('',[Validators.required]),
+    })
 
   userItem: User = {id: 0, nome: "", cognome: "", dataNascita: ""}
   
@@ -21,7 +28,7 @@ export class FormPageComponent implements OnInit{
     if(!(this.router.url.split("/")[1]==="create")){
     let id: number = Number( this.route.snapshot.paramMap.get('id'));
     
-    this.service.findById(id)?.subscribe(user => this.userItem = user);
+    this.service.findById(id)?.subscribe(user => {this.userReactive.patchValue(user)});
     }
   }
 
@@ -47,9 +54,30 @@ export class FormPageComponent implements OnInit{
 
   insertUtente(){
     let id:number = this.service.incrementoId();
-    let automobileDaInserire: User={id, nome:this.userItem.nome, cognome:this.userItem.cognome, dataNascita:this.userItem.dataNascita};
+    let automobileDaInserire: User={...this.userReactive.value,id};
     this.service.create(automobileDaInserire);
     this.router.navigate(["list"]);
     
+  }
+  aggiorna(){
+    this.service.edit(this.userReactive.value);
+    this.router.navigate(["list"]);
+  }
+
+  fillForm(user:User){
+     this.userReactive.patchValue(user);
+     if(("/")[1]==="detail"){
+        this.userReactive.disable();
+     }
+     
+  }
+  getUser(idUser:number){
+    this.service.findById(idUser).subscribe(res=> {
+      if(res){
+        this.userItem={...res};
+        this.fillForm(res);
+        
+      }
+    });
   }
 }

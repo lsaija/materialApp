@@ -23,7 +23,7 @@ const routes: Routes = [
  component:FormPageComponent
   
 },
-{path:'create/:id',
+{path:'create',
  component:FormPageComponent
   
 },

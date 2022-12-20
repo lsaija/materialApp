@@ -9,6 +9,7 @@ import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatCardModule} from '@angular/material/card';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 
@@ -24,7 +25,8 @@ import {MatCardModule} from '@angular/material/card';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    FormsModule
+    FormsModule,
+    MatSnackBarModule
     
   ],
   exports:[
@@ -36,7 +38,8 @@ import {MatCardModule} from '@angular/material/card';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
-    FormsModule
+    FormsModule,
+    MatSnackBarModule
   ]
 })
 export class MaterialModule { }

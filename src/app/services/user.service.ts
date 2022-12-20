@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, retry } from 'rxjs';
 import { User } from '../model/user';
 
 @Injectable({
@@ -39,9 +39,16 @@ export class UserService {
     let result= this.LISTA_USER.find(a=> a.id==idInput)!;
     return of(result!);
   }
-
-  edit(userUpdate:User):Observable<User[]>{
-    this.LISTA_USER.filter(a => a.id == userUpdate.id).map(a => { a.nome = userUpdate.nome; a.cognome = userUpdate.cognome; a.dataNascita = userUpdate.dataNascita; });
+  edit(user: User): Observable<User[]> {
+    this.LISTA_USER.forEach((elem, index) => {
+      if (elem.id == user.id) {
+        return of(this.LISTA_USER[index] = user);
+        // return { ...elem, nome: user.nome, cognome: user.cognome, dataDiNascita: user.dataDiNascita };
+      }
+      else {
+        return of(user);
+      }
+    });
     return of(this.LISTA_USER);
   }
   incrementoId():number{
